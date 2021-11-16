@@ -48,10 +48,6 @@
 
 							scene.add( gltf.scene );
 
-							var bb = new THREE.Box3()
-							bb.setFromObject(selectedObject);
-							bb.center(controls.target);
-
 						}, undefined, function ( error ) {
 
 							console.error( error );
