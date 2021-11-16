@@ -1,6 +1,33 @@
 {
+  "name": "duck-js",
+  "version": "1.0.0",
+  "description": "Render a duck using shaders and ThreeJS",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarekelkurjie/duck.js.git"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "three": "^0.134.0"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "duck",
+    "server",
+    "express",
+    "nodejs",
+    "threejs",
+    "three",
+    "3d",
+    "model"
+  ],
+  "author": "Tarek Elkurjie and Joey Malvinni",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tarekelkurjie/duck.js/issues"
+  },
+  "homepage": "https://github.com/tarekelkurjie/duck.js#readme"
 }
