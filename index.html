@@ -42,28 +42,21 @@
 						// model
 
 						// use of RoughnessMipmapper is optional
-						const roughnessMipmapper = new RoughnessMipmapper( renderer );
+						const loader = new GLTFLoader();
 
-						const loader = new GLTFLoader().
-						loader.load( '/duck/scene.gltf', function ( gltf ) {
-
-							gltf.scene.traverse( function ( child ) {
-
-								if ( child.isMesh ) {
-
-									roughnessMipmapper.generateMipmaps( child.material );
-
-								}
-
-							} );
+						loader.load( 'duck/scene.glb', function ( gltf ) {
 
 							scene.add( gltf.scene );
 
-							roughnessMipmapper.dispose();
+							var bb = new THREE.Box3()
+							bb.setFromObject(selectedObject);
+							bb.center(controls.target);
 
-							render();
+						}, undefined, function ( error ) {
 
-						});
+							console.error( error );
+
+						} );
 
 					});
 
