@@ -12,7 +12,9 @@ document.addEventListener('click', (e) => {
 })
 
 document.addEventListener('click', (e) => {
-    window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus();
+    if (e.target.id == 'git') {
+        window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus();
+    }
 })
 
 function init() {
