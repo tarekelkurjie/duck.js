@@ -64,3 +64,12 @@ body, html {
         font-size: 17px;
     }
 }
+
+.vol-btn {
+    color:rgb(255, 0, 0);
+    font-size: 3em !important;
+    cursor: pointer;
+    position: absolute;
+    top: 1vh;
+    right: 1vw;
+}
