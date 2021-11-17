@@ -31,7 +31,7 @@ body, html {
 }
 
 .soCool {
-    color:rgb(21, 0, 255);
+    color:rgb(251, 255, 0);
     transform: rotate(-45deg)
                skew(-10deg);
     position: relative;
@@ -58,7 +58,7 @@ body, html {
         font-size: 17px;
     }
     50% { 
-        font-size: 18px;
+        font-size: 18.5px;
     }
     100% { 
         font-size: 17px;
