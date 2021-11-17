@@ -23,6 +23,12 @@ document.addEventListener('click', (e) => {
     init()
 })
 
+document.addEventListener('click', (e) => {
+    if (e.target.id == 'git') {
+        window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus();
+    }
+})
+
 function init () {
     document.body.style.cursor = 'auto';
 
