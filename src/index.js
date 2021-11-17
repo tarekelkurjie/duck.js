@@ -11,10 +11,6 @@ document.addEventListener('click', (e) => {
     init()
 })
 
-document.addEventListener('click', (e) => {
-    window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus();
-})
-
 function init() {
     document.body.style.cursor = 'auto';
 
