@@ -1,0 +1,31 @@
+body, html {
+    margin: 0; 
+    padding: 0;
+    overflow: hidden;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    color: rgb(255, 0, 230);
+    background-color: black;
+    text-align: center;
+    cursor: pointer;
+}
+
+.duck {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    color: rgb(255, 0, 230);
+    width: 100%;
+    font-size: 5em;
+}
+
+.subtitle {
+    color:rgb(21, 0, 255);
+    width: 100%;
+}
+
+.git {
+    color:rgb(255, 219, 14);
+    font-size: 3em !important;
+    cursor: pointer;
+    position: absolute;
+    bottom: 1vh;
+    left: 1vw;
+}
