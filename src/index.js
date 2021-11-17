@@ -129,7 +129,7 @@ function loadObama () {
 
         render();
 
-        duck = gltf.scene;
+        obama = gltf.scene;
 
         window.requestAnimationFrame(obamaSpin)
 
@@ -138,5 +138,10 @@ function loadObama () {
     });
 }
 function obamaSpin () {
+    if (obama) {
+        obama.rotation.y += 0.3125;
+        render()
+    }
 
+    window.requestAnimationFrame(obamaSpin)
 }
