@@ -29,3 +29,38 @@ body, html {
     bottom: 1vh;
     left: 1vw;
 }
+
+.soCool {
+    color:rgb(21, 0, 255);
+    transform: rotate(-45deg)
+               skew(-10deg);
+    position: relative;
+    top: -175px;
+    left: -90px;
+}
+
+.muchWow {
+    color: rgb(87, 236, 0);
+    transform: rotate(45deg)
+               skew(10deg);
+    position: relative;
+    top: -212px;
+    left: 105px;
+}
+
+.pulsate {
+    animation: pulsate 0.7s ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes pulsate {
+    0% { 
+        font-size: 17px;
+    }
+    50% { 
+        font-size: 18px;
+    }
+    100% { 
+        font-size: 17px;
+    }
+}

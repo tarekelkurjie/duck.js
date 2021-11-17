@@ -8,6 +8,8 @@ document.addEventListener('click', (e) => {
     if (e.target.id == 'git') return;
     document.getElementById('duck').remove()
     document.getElementById('subtitle').remove()
+    document.getElementById('soCool').remove()
+    document.getElementById('muchWow').remove()
     init()
 })
 
