@@ -106,7 +106,7 @@ function init () {
     pointLight = new THREE.PointLight(0xffffff, 1.5);
     pointLight.position.set(0, 100, 90);
     scene.add(pointLight);
-
+  
     let ambient = new THREE.AmbientLight(0xffffff, .05);
     scene.add(ambient);
 
@@ -118,6 +118,7 @@ function init () {
         duck = gltf.scene;
 
         window.requestAnimationFrame(duckRotate)
+
     }, undefined, function (error) {
         console.error(error);
     });
@@ -247,4 +248,29 @@ function bgRave () {
 
     scene.background = new THREE.Color(`hsl(${bgHue}, 100%, 50%)`);
     window.requestAnimationFrame(bgRave)
+    window.requestAnimationFrame(rave)
+}
+
+function loadObama () {
+    loader.load('src/obama_prism.glb', function (gltf) {
+
+        scene.add(gltf.scene);
+
+        render();
+
+        obama = gltf.scene;
+
+        window.requestAnimationFrame(obamaSpin)
+
+    }, undefined, function (error) {
+        console.error(error);
+    });
+}
+function obamaSpin () {
+    if (obama) {
+        obama.rotation.y += 0.3125;
+        render()
+    }
+
+    window.requestAnimationFrame(obamaSpin)
 }
