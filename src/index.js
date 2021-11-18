@@ -65,16 +65,7 @@ document.addEventListener('click', (e) => {
     document.getElementById('muchWow').remove()
     init()
     didInit = true;
-})
-
-document.getElementById('volume').addEventListener('click', (e) => {
-    let volumeElement = document.getElementById('volume');
-    if (volumeElement.classList.contains("turnOff")) {
-        audio.pause();
-    } else {
-        audio.play();
-    }
-    toggleVolumeIcon();
+    console.log('duck should load');
 })
 
 function toggleVolumeIcon () {
@@ -249,28 +240,4 @@ function bgRave () {
     scene.background = new THREE.Color(`hsl(${bgHue}, 100%, 50%)`);
     window.requestAnimationFrame(bgRave)
     window.requestAnimationFrame(rave)
-}
-
-function loadObama () {
-    loader.load('src/obama_prism.glb', function (gltf) {
-
-        scene.add(gltf.scene);
-
-        render();
-
-        obama = gltf.scene;
-
-        window.requestAnimationFrame(obamaSpin)
-
-    }, undefined, function (error) {
-        console.error(error);
-    });
-}
-function obamaSpin () {
-    if (obama) {
-        obama.rotation.y += 0.3125;
-        render()
-    }
-
-    window.requestAnimationFrame(obamaSpin)
 }
