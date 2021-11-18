@@ -19,14 +19,79 @@ body, html {
 .subtitle {
     color:rgb(21, 0, 255);
     width: 100%;
+    font-size: 1em;
 }
 
 .git {
-    color:rgb(255, 219, 14);
+    font-size: 3em !important;
+    cursor: pointer;
+    position: absolute;
+    bottom: 3vh;
+    left: 1vw;   
+    width: 3.5vw;
+}
+
+.soCool {
+    color:rgb(251, 255, 0);
+    transform: rotate(-45deg);
+               /* skew(-10deg); */
+    position: relative;
+    top: -190px;
+    left: -100px;
+}
+
+.muchWow {
+    color: rgb(87, 236, 0);
+    transform: rotate(45deg);
+               /* skew(10deg); */
+    position: relative;
+    top: -230px;
+    left: 105px;
+}
+
+.pulsate {
+    animation: pulsate 0.7s ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes pulsate {
+    0% { 
+        font-size: 17px;
+    }
+    50% { 
+        font-size: 18.5px;
+    }
+    100% { 
+        font-size: 17px;
+    }
+}
+
+.bigPulsate {
+    animation: bigPulsate 0.7s ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bigPulsate {
+    0% { 
+        font-size: 1em;
+    }
+    50% { 
+        font-size: 1.23em;
+    }
+    100% { 
+        font-size: 1em;
+    }
+}
+
+
+.volume {
+    color:rgb(245, 245, 245);
     font-size: 3em !important;
     cursor: pointer;
     position: absolute;
     bottom: 1vh;
+    right: 1vw;
+    display: none;
     left: 1vw;
 }
 

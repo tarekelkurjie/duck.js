@@ -2,37 +2,95 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.134.0';
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.134.0/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.134.0/examples/jsm/controls/OrbitControls'
 
-let camera, scene, renderer, duck, hue = 1, direction= 1, pointLight, obama;
+let camera, 
+    scene, 
+    renderer, 
+    duck, 
+    hue = 0, 
+    direction= 1, 
+    pointLight, 
+    obamas = [],
+    didInit = false, 
+    obamaSpun = false, 
+    audio,
+    gitHue = 0,
+    gitDirection = 1,
+    bgHue = 0,
+    bgDirection = -1;
+
+var r = 5;
+var theta = 0;
+var dTheta = 2 * Math.PI / 1000;
+
+function rand() {
+    let r = Math.random();
+
+    if (r > 0.4 && r < 0.8) {
+        console.log(r)
+        return r;
+    } else {
+        r = rand();
+        console.log(r)
+        return r;
+    }
+}
 
 const loader = new GLTFLoader();
+
+gitRave()
 
 document.addEventListener('keydown', (event) => {
     var name = event.key;
     
-    if (name === "r") {
+    if (name === "o") {
         loadObama()
+    } else if (name === "m") {
+        let volumeElement = document.getElementById('volume');
+        if (volumeElement.classList.contains("turnOff")) {
+            audio.pause();
+        } else {
+            audio.play();
+        }
+        toggleVolumeIcon();
     }
 }, false);
 
 document.addEventListener('click', (e) => {
-    if (e.target.id == 'git') return;
+    if (e.target.id == 'git') return window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus
+    if (e.target.id == 'volume') return;
+    if (didInit) return;
     document.getElementById('duck').remove()
     document.getElementById('subtitle').remove()
     document.getElementById('soCool').remove()
     document.getElementById('muchWow').remove()
     init()
+    didInit = true;
 })
 
-document.addEventListener('click', (e) => {
-    if (e.target.id == 'git') {
-        window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus();
+document.getElementById('volume').addEventListener('click', (e) => {
+    let volumeElement = document.getElementById('volume');
+    if (volumeElement.classList.contains("turnOff")) {
+        audio.pause();
+    } else {
+        audio.play();
     }
+    toggleVolumeIcon();
 })
+
+function toggleVolumeIcon () {
+    let volumeElement = document.getElementById('volume');
+    volumeElement.classList.toggle("fa-volume-up");
+    volumeElement.classList.toggle("turnOff");
+
+    volumeElement.classList.toggle("fa-volume-mute");
+    volumeElement.classList.toggle("turnOn");
+}
 
 function init () {
+    document.getElementById('volume').style.display = 'block'
     document.body.style.cursor = 'auto';
 
-    var audio = new Audio('src/running_in_the_90s.mp3');
+    audio = new Audio('src/running_in_the_90s.mp3');
     audio.play();
 
     const container = document.createElement('div');
@@ -45,11 +103,14 @@ function init () {
 
     scene = new THREE.Scene();
 
-    pointLight = new THREE.PointLight(0xffffff, 1.5); pointLight.position.set(0, 100, 90);
+    pointLight = new THREE.PointLight(0xffffff, 1.5);
+    pointLight.position.set(0, 100, 90);
     scene.add(pointLight);
+  
+    let ambient = new THREE.AmbientLight(0xffffff, .05);
+    scene.add(ambient);
 
     loader.load('src/duck.glb', function (gltf) {
-
         scene.add(gltf.scene);
 
         render();
@@ -59,10 +120,8 @@ function init () {
         window.requestAnimationFrame(duckRotate)
 
     }, undefined, function (error) {
-
         console.error(error);
-
-    } );
+    });
 
     window.requestAnimationFrame(rave)
 
@@ -79,6 +138,8 @@ function init () {
     controls.maxDistance = 15;
     controls.target.set(0, 0, - 0.2);
     controls.update();
+
+    // bgRave()
 
     window.addEventListener('resize', onWindowResize);
 }
@@ -115,10 +176,78 @@ function rave () {
     }
     pointLight.color = new THREE.Color(`hsl(${hue}, 100%, 50%)`);
 
-    pointLight.power = 15;
+    window.requestAnimationFrame(rave)
+}
 
-    console.log(hue)
+function loadObama () {
+    loader.load('src/obama_prism.glb', function (gltf) {
 
+        scene.add(gltf.scene);
+
+        obamas.push({
+            obj: gltf.scene,
+            seed: rand() * 2,
+            direction: Math.round(Math.random()) ? -1 : 1
+        });
+        
+        if (!obamaSpun) {
+            window.requestAnimationFrame(obamaSpin)
+        }
+        
+    }, undefined, function (error) {
+        console.error(error);
+    });
+}
+function obamaSpin () {
+    theta += dTheta;
+    obamaSpun = true;
+    if (obamas.length) {
+        for (let i = 0; i < obamas.length; i++) {
+            // obamas[i].position.x = r * Math.cos(theta * i);
+            // obamas[i].position.z = r * Math.sin(theta * i);
+            // obamas[i].rotation.y += 0.1;
+            obamas[i].obj.rotation.x += obamas[i].seed / 10;
+            obamas[i].obj.rotation.z += obamas[i].seed / 10;
+            obamas[i].obj.position.x = r * Math.cos(theta * i * obamas[i].direction);
+            obamas[i].obj.position.z = r * Math.sin(theta * obamas[i].seed * i * obamas[i].direction);
+            obamas[i].obj.position.y = r * Math.sin(theta * obamas[i].seed * obamas[i].direction);
+        }
+    }
+
+    window.requestAnimationFrame(obamaSpin)
+}
+
+function gitRave () {
+    let git = document.getElementById('git')
+
+    gitHue += gitDirection;
+    if (gitHue > 250) {
+        gitDirection *= -1;
+        gitHue = 250;
+    }
+    if (gitHue < 0) {
+        gitDirection *= -1;
+        gitHue = 0;
+    }
+
+    git.style.fill = `hsl(${gitHue}, 100%, 50%)`
+
+    window.requestAnimationFrame(gitRave)
+}
+
+function bgRave () {
+    bgHue += bgDirection;
+    if (bgHue > 250) {
+        bgDirection *= -1;
+        bgHue = 250;
+    }
+    if (bgHue < 0) {
+        bgDirection *= -1;
+        bgHue = 0;
+    }
+
+    scene.background = new THREE.Color(`hsl(${bgHue}, 100%, 50%)`);
+    window.requestAnimationFrame(bgRave)
     window.requestAnimationFrame(rave)
 }
 
