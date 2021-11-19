@@ -16,7 +16,8 @@ let camera,
     gitHue = 0,
     gitDirection = 1,
     bgHue = 0,
-    bgDirection = -1;
+    bgDirection = -1,
+    currentCommand;
 
 var r = 5;
 var theta = 0;
@@ -26,11 +27,9 @@ function rand() {
     let r = Math.random();
 
     if (r > 0.4 && r < 0.8) {
-        console.log(r)
         return r;
     } else {
         r = rand();
-        console.log(r)
         return r;
     }
 }
@@ -39,12 +38,22 @@ const loader = new GLTFLoader();
 
 gitRave()
 
+hotkeys('alt+c', function(event, handler) {
+    if (event.type === 'keydown') {
+        currentCommand = prompt("Enter your command: ");
+        console.log(currentCommand);
+        if (currentCommand == "obama") {
+            loadObama();
+        } else {
+            alert("Invalid command!");
+        }
+    }
+})
+
 document.addEventListener('keydown', (event) => {
     var name = event.key;
     
-    if (name === "o") {
-        loadObama()
-    } else if (name === "m") {
+    if (name === "m") {
         let volumeElement = document.getElementById('volume');
         if (volumeElement.classList.contains("turnOff")) {
             audio.pause();
@@ -65,7 +74,6 @@ document.addEventListener('click', (e) => {
     document.getElementById('muchWow').remove()
     init()
     didInit = true;
-    console.log('duck should load');
 })
 
 function toggleVolumeIcon () {
