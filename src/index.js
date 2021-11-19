@@ -57,7 +57,15 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('click', (e) => {
     if (e.target.id == 'git') return window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus
-    if (e.target.id == 'volume') return;
+    if (e.target.id == 'volume') {
+        let volumeElement = document.getElementById('volume');
+        if (volumeElement.classList.contains("turnOff")) {
+            audio.pause();
+        } else {
+            audio.play();
+        }
+        toggleVolumeIcon();
+    };
     if (didInit) return;
     document.getElementById('duck').remove()
     document.getElementById('subtitle').remove()
