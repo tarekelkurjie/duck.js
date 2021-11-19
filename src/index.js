@@ -258,27 +258,3 @@ function bgRave () {
     window.requestAnimationFrame(bgRave)
     window.requestAnimationFrame(rave)
 }
-
-function loadObama () {
-    loader.load('src/obama_prism.glb', function (gltf) {
-
-        scene.add(gltf.scene);
-
-        render();
-
-        obama = gltf.scene;
-
-        window.requestAnimationFrame(obamaSpin)
-
-    }, undefined, function (error) {
-        console.error(error);
-    });
-}
-function obamaSpin () {
-    if (obama) {
-        obama.rotation.y += 0.3125;
-        render()
-    }
-
-    window.requestAnimationFrame(obamaSpin)
-}
