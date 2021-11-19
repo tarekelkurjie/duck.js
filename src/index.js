@@ -17,7 +17,8 @@ let camera,
     gitDirection = 1,
     bgHue = 0,
     bgDirection = -1,
-    currentCommand;
+    currentCommand,
+    stopRave = false;
 
 var r = 5;
 var theta = 0;
@@ -40,10 +41,14 @@ gitRave()
 
 hotkeys('alt+c', function(event, handler) {
     if (event.type === 'keydown') {
+
         currentCommand = prompt("Enter your command: ");
-        console.log(currentCommand);
+
         if (currentCommand == "obama") {
             loadObama();
+        } else if (currentCommand == "toggleRave") {
+            stopRave = !stopRave;
+            bgRave();
         } else {
             alert("Invalid command!");
         }
@@ -246,6 +251,18 @@ function bgRave () {
     }
 
     scene.background = new THREE.Color(`hsl(${bgHue}, 100%, 50%)`);
-    window.requestAnimationFrame(bgRave)
-    window.requestAnimationFrame(rave)
+    if (stopRave == false) {
+        window.requestAnimationFrame(bgRave)
+        window.requestAnimationFrame(rave)
+        console.log('rave time!')
+    } else if (stopRave == true) {
+        bgReset();
+        return;
+    }
+}
+
+function bgReset () {
+    scene.background = new THREE.Color('rgb(0, 0, 0)');
+    window.requestAnimationFrame(bgReset)
+    console.log("no rave :(");
 }
