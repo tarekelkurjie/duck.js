@@ -17,8 +17,7 @@ let camera,
     gitDirection = 1,
     bgHue = 0,
     bgDirection = -1,
-    currentCommand,
-    stopRave = false;
+    stopRave = true;
 
 var r = 5;
 var theta = 0;
@@ -39,20 +38,38 @@ const loader = new GLTFLoader();
 
 gitRave()
 
-hotkeys('alt+c', function(event, handler) {
-    if (event.type === 'keydown') {
+// hotkeys('alt+c', function(event, handler) {
+//     if (event.type === 'keydown') {
 
-        currentCommand = prompt("Enter your command: ");
+//         currentCommand = prompt("Enter your command: ");
 
-        if (currentCommand == "obama") {
-            loadObama();
-        } else if (currentCommand == "toggleRave") {
-            stopRave = !stopRave;
-            bgRave();
-        } else {
-            alert("Invalid command!");
-        }
+//         if (currentCommand == "obama") {
+//             loadObama();
+//         } else if (currentCommand == "toggleRave") {
+//             stopRave = !stopRave;
+//             bgRave();
+//         } else {
+//             alert("Invalid command!");
+//         }
+//     }
+// })
+
+const submitButton = document.getElementById("submit");
+
+submitButton.addEventListener('click', (e) => {
+    let commandVal = document.getElementById("cmd").value;
+    console.log(commandVal);
+
+    if (commandVal == "obama") {
+        loadObama();
+    } else if (commandVal == "toggleRave") {
+        stopRave = !stopRave;
+        bgRave();
+    } else {
+        alert("Invalid command!");
     }
+
+    commandVal = "test";
 })
 
 document.addEventListener('keydown', (event) => {
