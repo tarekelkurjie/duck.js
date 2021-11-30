@@ -12,4 +12,4 @@ Duck.js is far from done. We are planning to add many, many more features down t
 
 ## How can I use duck.js?
 
-You can either simply visit the website [here](duckspin.herokuapp.com), or fork us right here on GitHub! Duck.js uses the very permissive MIT licence, so feel free to modify it how you like.
+You can either simply visit the website [here](//duckspin.herokuapp.com), or fork us right here on GitHub! Duck.js uses the very permissive MIT licence, so feel free to modify it how you like.
