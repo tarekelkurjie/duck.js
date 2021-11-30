@@ -141,3 +141,15 @@ body, html {
     top: 1vh;
     right: 1vw;
 }
+
+.commands {
+    width: 100vw;
+    border: transparent;
+    background: gray;
+    opacity: 30%;
+    display: none;
+}
+
+input:focus, commands {
+    outline: none !important;
+}

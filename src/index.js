@@ -38,56 +38,62 @@ const loader = new GLTFLoader();
 
 gitRave()
 
-// hotkeys('alt+c', function(event, handler) {
-//     if (event.type === 'keydown') {
+function addCommands() {
+    document.getElementById("cmd").style.display = "block";
+    document.getElementById("cmd").focus()
+}
 
-//         currentCommand = prompt("Enter your command: ");
+function remCommands() {
+    document.getElementById("cmd").style.display = "none";
+}
 
-//         if (currentCommand == "obama") {
-//             loadObama();
-//         } else if (currentCommand == "toggleRave") {
-//             stopRave = !stopRave;
-//             bgRave();
-//         } else {
-//             alert("Invalid command!");
-//         }
-//     }
-// })
+if (document.getElementById("cmd")) {
+    const textField = document.getElementById("cmd")
+    textField.addEventListener('keydown', (e) => {
+        if (e.key === "Enter") {   
+            let commandVal = textField.value;
+            console.log(commandVal);
 
-const submitButton = document.getElementById("submit");
+            if (commandVal == "/obama") {
+                loadObama();
+                remCommands();
 
-submitButton.addEventListener('click', (e) => {
-    let commandVal = document.getElementById("cmd").value;
-    console.log(commandVal);
-
-    if (commandVal == "obama") {
-        loadObama();
-    } else if (commandVal == "toggleRave") {
-        stopRave = !stopRave;
-        bgRave();
-    } else {
-        alert("Invalid command!");
-    }
-
-    commandVal = "test";
-})
+            } else if (commandVal == "/toggleRave") {
+                stopRave = !stopRave;
+                bgRave();
+                remCommands();
+            } else {
+                alert("Invalid command!");
+                remCommands();
+            }
+        }
+        console.log(e.key)
+    })
+}
 
 document.addEventListener('keydown', (event) => {
     var name = event.key;
     
-    if (name === "m") {
-        let volumeElement = document.getElementById('volume');
-        if (volumeElement.classList.contains("turnOff")) {
-            audio.pause();
-        } else {
-            audio.play();
+    if (document.activeElement == document.body) {
+        console.log(document.activeElement)
+        if (name === "m") {
+            let volumeElement = document.getElementById('volume');
+            if (volumeElement.classList.contains("turnOff")) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
+            toggleVolumeIcon();
         }
-        toggleVolumeIcon();
     }
+    if (name === "/") {
+        addCommands();
+    }
+
 }, false);
 
 document.addEventListener('click', (e) => {
-    if (e.target.id == 'git') return window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus
+    if (e.target.id == 'gitButton') return window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus
     if (e.target.id == 'volume') {
         let volumeElement = document.getElementById('volume');
         if (volumeElement.classList.contains("turnOff")) {
@@ -227,6 +233,7 @@ function loadObama () {
         console.error(error);
     });
 }
+
 function obamaSpin () {
     theta += dTheta;
     obamaSpun = true;
@@ -279,6 +286,7 @@ function bgRave () {
     if (stopRave == false) {
         window.requestAnimationFrame(bgRave)
         window.requestAnimationFrame(rave)
+        window.cancelAnimationFrame(bgReset);
         console.log('rave time!')
     } else if (stopRave == true) {
         bgReset();
@@ -288,6 +296,7 @@ function bgRave () {
 
 function bgReset () {
     scene.background = new THREE.Color('rgb(0, 0, 0)');
+    window.cancelAnimationFrame(rave);
     window.requestAnimationFrame(bgReset)
     console.log("no rave :(");
 }
