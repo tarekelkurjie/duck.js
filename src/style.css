@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200&display=swap');
+
 body, html {
     margin: 0; 
     padding: 0;
@@ -145,9 +147,11 @@ body, html {
 .commands {
     width: 100vw;
     border: transparent;
+    opacity: 100%;
     background: gray;
-    opacity: 30%;
     display: none;
+    font-family: 'Source Code Pro';
+    font-style: bold;
 }
 
 input:focus, commands {

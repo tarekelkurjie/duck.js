@@ -52,22 +52,27 @@ if (document.getElementById("cmd")) {
     textField.addEventListener('keydown', (e) => {
         if (e.key === "Enter") {   
             let commandVal = textField.value;
-            console.log(commandVal);
 
             if (commandVal == "/obama") {
                 loadObama();
                 remCommands();
-
+                if (didInit == false) {init(); didInit = true}
             } else if (commandVal == "/toggleRave") {
                 stopRave = !stopRave;
                 bgRave();
                 remCommands();
+                if (didInit == false) {init(); didInit = true}
+            } else if (commandVal == "/removeObamas") {
+                removeObama();
+                remCommands();
+                if (didInit == false) {init(); didInit = true}
             } else {
                 alert("Invalid command!");
                 remCommands();
             }
+        } else if (e.key === "Escape") {
+            remCommands();
         }
-        console.log(e.key)
     })
 }
 
@@ -75,7 +80,6 @@ document.addEventListener('keydown', (event) => {
     var name = event.key;
     
     if (document.activeElement == document.body) {
-        console.log(document.activeElement)
         if (name === "m") {
             let volumeElement = document.getElementById('volume');
             if (volumeElement.classList.contains("turnOff")) {
@@ -104,10 +108,6 @@ document.addEventListener('click', (e) => {
         toggleVolumeIcon();
     };
     if (didInit) return;
-    document.getElementById('duck').remove()
-    document.getElementById('subtitle').remove()
-    document.getElementById('soCool').remove()
-    document.getElementById('muchWow').remove()
     init()
     didInit = true;
 })
@@ -122,6 +122,12 @@ function toggleVolumeIcon () {
 }
 
 function init () {
+
+    document.getElementById('duck').remove()
+    document.getElementById('subtitle').remove()
+    document.getElementById('soCool').remove()
+    document.getElementById('muchWow').remove()
+
     document.getElementById('volume').style.display = 'block'
     document.body.style.cursor = 'auto';
 
@@ -234,14 +240,20 @@ function loadObama () {
     });
 }
 
+function removeObama() {
+    for (let x = 0; x <= obamas.length - 1; x++) {
+        scene.remove(obamas[x].obj)
+    } 
+    for (let x = 0; x <= obamas.length; x++) {
+        obamas.splice(x, 1);
+    } 
+}
+
 function obamaSpin () {
     theta += dTheta;
     obamaSpun = true;
     if (obamas.length) {
         for (let i = 0; i < obamas.length; i++) {
-            // obamas[i].position.x = r * Math.cos(theta * i);
-            // obamas[i].position.z = r * Math.sin(theta * i);
-            // obamas[i].rotation.y += 0.1;
             obamas[i].obj.rotation.x += obamas[i].seed / 10;
             obamas[i].obj.rotation.z += obamas[i].seed / 10;
             obamas[i].obj.position.x = r * Math.cos(theta * i * obamas[i].direction);
@@ -287,7 +299,6 @@ function bgRave () {
         window.requestAnimationFrame(bgRave)
         window.requestAnimationFrame(rave)
         window.cancelAnimationFrame(bgReset);
-        console.log('rave time!')
     } else if (stopRave == true) {
         bgReset();
         return;
@@ -298,5 +309,4 @@ function bgReset () {
     scene.background = new THREE.Color('rgb(0, 0, 0)');
     window.cancelAnimationFrame(rave);
     window.requestAnimationFrame(bgReset)
-    console.log("no rave :(");
 }
