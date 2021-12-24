@@ -1,6 +1,7 @@
-import * as THREE from 'https://cdn.skypack.dev/three@0.134.0';
-import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.134.0/examples/jsm/loaders/GLTFLoader';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.134.0/examples/jsm/controls/OrbitControls'
+import './style.css'
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 let camera, 
     scene, 
@@ -36,7 +37,7 @@ function rand() {
 
 const loader = new GLTFLoader();
 
-gitRave()
+//gitRave()
 
 function addCommands() {
     document.getElementById("cmd").style.display = "block";
@@ -131,7 +132,7 @@ function init () {
     document.getElementById('volume').style.display = 'block'
     document.body.style.cursor = 'auto';
 
-    audio = new Audio('src/running_in_the_90s.mp3');
+    audio = new Audio('public/running_in_the_90s.mp3');
     audio.play();
 
     const container = document.createElement('div');
@@ -151,7 +152,7 @@ function init () {
     let ambient = new THREE.AmbientLight(0xffffff, .05);
     scene.add(ambient);
 
-    loader.load('src/duck.glb', function (gltf) {
+    loader.load('public/duck.glb', function (gltf) {
         scene.add(gltf.scene);
 
         render();
@@ -221,7 +222,7 @@ function rave () {
 }
 
 function loadObama () {
-    loader.load('src/obama_prism.glb', function (gltf) {
+    loader.load('public/obama_prism.glb', function (gltf) {
 
         scene.add(gltf.scene);
 
