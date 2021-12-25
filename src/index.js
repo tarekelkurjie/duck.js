@@ -317,6 +317,8 @@ function bgRave () {
     } else if (stopRave == true) {
         bgReset();
         return;
+    }
+}
 
 function bgReset () {
     scene.background = new THREE.Color('rgb(0, 0, 0)');
