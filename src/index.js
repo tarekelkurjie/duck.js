@@ -1,6 +1,7 @@
-import * as THREE from 'https://cdn.skypack.dev/three@0.134.0';
-import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.134.0/examples/jsm/loaders/GLTFLoader';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.134.0/examples/jsm/controls/OrbitControls'
+import './style.css'
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 let camera, 
     scene, 
@@ -16,7 +17,8 @@ let camera,
     gitHue = 0,
     gitDirection = 1,
     bgHue = 0,
-    bgDirection = -1;
+    bgDirection = -1,
+    stopRave = true;
 
 var r = 5;
 var theta = 0;
@@ -26,11 +28,9 @@ function rand() {
     let r = Math.random();
 
     if (r > 0.4 && r < 0.8) {
-        console.log(r)
         return r;
     } else {
         r = rand();
-        console.log(r)
         return r;
     }
 }
@@ -81,9 +81,26 @@ if (document.getElementById("cmd")) {
 document.addEventListener('keydown', (event) => {
     var name = event.key;
     
-    if (name === "o") {
-        loadObama()
-    } else if (name === "m") {
+    if (document.activeElement == document.body) {
+        if (name === "m") {
+            let volumeElement = document.getElementById('volume');
+            if (volumeElement.classList.contains("turnOff")) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
+            toggleVolumeIcon();
+        }
+    }
+    if (name === "/") {
+        addCommands();
+    }
+
+}, false);
+
+document.addEventListener('click', (e) => {
+    if (e.target.id == 'gitButton') return window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus
+    if (e.target.id == 'volume') {
         let volumeElement = document.getElementById('volume');
         if (volumeElement.classList.contains("turnOff")) {
             audio.pause();
@@ -106,22 +123,8 @@ document.addEventListener('click', (e) => {
         toggleVolumeIcon();
     };
     if (didInit) return;
-    document.getElementById('duck').remove()
-    document.getElementById('subtitle').remove()
-    document.getElementById('soCool').remove()
-    document.getElementById('muchWow').remove()
     init()
     didInit = true;
-})
-
-document.getElementById('volume').addEventListener('click', (e) => {
-    let volumeElement = document.getElementById('volume');
-    if (volumeElement.classList.contains("turnOff")) {
-        audio.pause();
-    } else {
-        audio.play();
-    }
-    toggleVolumeIcon();
 })
 
 function toggleVolumeIcon () {
@@ -143,7 +146,7 @@ function init () {
     document.getElementById('volume').style.display = 'block'
     document.body.style.cursor = 'auto';
 
-    audio = new Audio('src/running_in_the_90s.mp3');
+    audio = new Audio('public/running_in_the_90s.mp3');
     audio.play();
 
     const container = document.createElement('div');
@@ -163,7 +166,7 @@ function init () {
     let ambient = new THREE.AmbientLight(0xffffff, .05);
     scene.add(ambient);
 
-    loader.load('src/duck.glb', function (gltf) {
+    loader.load('public/duck.glb', function (gltf) {
         scene.add(gltf.scene);
 
         render();
@@ -233,7 +236,7 @@ function rave () {
 }
 
 function loadObama () {
-    loader.load('src/obama_prism.glb', function (gltf) {
+    loader.load('public/obama_prism.glb', function (gltf) {
 
         scene.add(gltf.scene);
 
@@ -251,14 +254,21 @@ function loadObama () {
         console.error(error);
     });
 }
+
+function removeObama() {
+    for (let x = 0; x <= obamas.length - 1; x++) {
+        scene.remove(obamas[x].obj)
+    } 
+    for (let x = 0; x <= obamas.length; x++) {
+        obamas.splice(x, 1);
+    } 
+}
+
 function obamaSpin () {
     theta += dTheta;
     obamaSpun = true;
     if (obamas.length) {
         for (let i = 0; i < obamas.length; i++) {
-            // obamas[i].position.x = r * Math.cos(theta * i);
-            // obamas[i].position.z = r * Math.sin(theta * i);
-            // obamas[i].rotation.y += 0.1;
             obamas[i].obj.rotation.x += obamas[i].seed / 10;
             obamas[i].obj.rotation.z += obamas[i].seed / 10;
             obamas[i].obj.position.x = r * Math.cos(theta * i * obamas[i].direction);
@@ -307,16 +317,12 @@ function bgRave () {
     } else if (stopRave == true) {
         bgReset();
         return;
-    }
-}
 
 function bgReset () {
     scene.background = new THREE.Color('rgb(0, 0, 0)');
     window.cancelAnimationFrame(rave);
     window.requestAnimationFrame(bgReset)
 }
-
-
 
 function chooseSplash () {
     let choices = [

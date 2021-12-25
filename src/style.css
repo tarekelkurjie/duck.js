@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200&display=swap');
+
 body, html {
     margin: 0; 
     padding: 0;
@@ -89,10 +91,13 @@ body, html {
     font-size: 3em !important;
     cursor: pointer;
     position: absolute;
-    bottom: 1vh;
+    text-align: center;
+    bottom: 3vh;
     right: 1vw;
+    width: 5vw;
+    height: 48px;
     display: none;
-    left: 1vw;
+    overflow: hidden;
 }
 
 .soCool {
@@ -137,4 +142,18 @@ body, html {
     position: absolute;
     top: 1vh;
     right: 1vw;
+}
+
+.commands {
+    width: 100vw;
+    border: transparent;
+    opacity: 100%;
+    background: gray;
+    display: none;
+    font-family: 'Source Code Pro';
+    font-style: bold;
+}
+
+input:focus, commands {
+    outline: none !important;
 }

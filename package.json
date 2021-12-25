@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Render a duck using shaders and ThreeJS",
   "main": "server.js",
+  "private": "true",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tarekelkurjie/duck.js.git"
@@ -12,7 +13,8 @@
     "three": "^0.134.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "webpack"
   },
   "keywords": [
     "duck",
@@ -29,5 +31,13 @@
   "bugs": {
     "url": "https://github.com/tarekelkurjie/duck.js/issues"
   },
-  "homepage": "https://github.com/tarekelkurjie/duck.js#readme"
+  "homepage": "https://github.com/tarekelkurjie/duck.js#readme",
+  "devDependencies": {
+    "css-loader": "^6.5.1",
+    "mini-css-extract-plugin": "^2.4.5",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.1"
+  }
 }
