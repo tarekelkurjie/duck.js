@@ -37,6 +37,7 @@ function rand() {
 
 const loader = new GLTFLoader();
 
+chooseSplash()
 //gitRave()
 
 function addCommands() {
@@ -107,6 +108,19 @@ document.addEventListener('click', (e) => {
             audio.play();
         }
         toggleVolumeIcon();
+    }
+}, false);
+
+document.addEventListener('click', (e) => {
+    if (e.target.id == 'git') return window.open('https://github.com/tarekelkurjie/duck.js', '_blank').focus
+    if (e.target.id == 'volume') {
+        let volumeElement = document.getElementById('volume');
+        if (volumeElement.classList.contains("turnOff")) {
+            audio.pause();
+        } else {
+            audio.play();
+        }
+        toggleVolumeIcon();
     };
     if (didInit) return;
     init()
@@ -126,8 +140,8 @@ function init () {
 
     document.getElementById('duck').remove()
     document.getElementById('subtitle').remove()
-    document.getElementById('soCool').remove()
-    document.getElementById('muchWow').remove()
+    document.getElementById('splash1').remove()
+    document.getElementById('splash2').remove()
 
     document.getElementById('volume').style.display = 'block'
     document.body.style.cursor = 'auto';
@@ -303,11 +317,34 @@ function bgRave () {
     } else if (stopRave == true) {
         bgReset();
         return;
-    }
-}
 
 function bgReset () {
     scene.background = new THREE.Color('rgb(0, 0, 0)');
     window.cancelAnimationFrame(rave);
     window.requestAnimationFrame(bgReset)
+}
+
+function chooseSplash () {
+    let choices = [
+        'so cool',
+        'much wow',
+        'how exquisite',
+        'amazing',
+        'indubitably',
+        '"10/10" - IGN',
+        'wasting time since 1996',
+        'it spins',
+        'higher budget than cyberpunk',
+        'backed by obama'
+    ]
+    let length = choices.length
+
+    let choice1 = choices[Math.floor(Math.random() * length)]
+    let choice2 = choices[Math.floor(Math.random() * length)]
+
+    while (choice1 == choice2) {
+        choice2 = choices[Math.floor(Math.random() * length)]
+    }
+    document.getElementById('splash1').innerHTML = choice1
+    document.getElementById('splash2').innerHTML = choice2
 }
