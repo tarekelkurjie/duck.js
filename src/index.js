@@ -37,7 +37,46 @@ function rand() {
 
 const loader = new GLTFLoader();
 
-gitRave()
+chooseSplash()
+//gitRave()
+
+function addCommands() {
+    document.getElementById("cmd").style.display = "block";
+    document.getElementById("cmd").focus()
+}
+
+function remCommands() {
+    document.getElementById("cmd").style.display = "none";
+}
+
+if (document.getElementById("cmd")) {
+    const textField = document.getElementById("cmd")
+    textField.addEventListener('keydown', (e) => {
+        if (e.key === "Enter") {   
+            let commandVal = textField.value;
+
+            if (commandVal == "/obama") {
+                loadObama();
+                remCommands();
+                if (didInit == false) {init(); didInit = true}
+            } else if (commandVal == "/toggleRave") {
+                stopRave = !stopRave;
+                bgRave();
+                remCommands();
+                if (didInit == false) {init(); didInit = true}
+            } else if (commandVal == "/removeObamas") {
+                removeObama();
+                remCommands();
+                if (didInit == false) {init(); didInit = true}
+            } else {
+                alert("Invalid command!");
+                remCommands();
+            }
+        } else if (e.key === "Escape") {
+            remCommands();
+        }
+    })
+}
 
 document.addEventListener('keydown', (event) => {
     var name = event.key;
@@ -95,6 +134,12 @@ function toggleVolumeIcon () {
 }
 
 function init () {
+
+    document.getElementById('duck').remove()
+    document.getElementById('subtitle').remove()
+    document.getElementById('splash1').remove()
+    document.getElementById('splash2').remove()
+
     document.getElementById('volume').style.display = 'block'
     document.body.style.cursor = 'auto';
 
@@ -255,6 +300,45 @@ function bgRave () {
     }
 
     scene.background = new THREE.Color(`hsl(${bgHue}, 100%, 50%)`);
-    window.requestAnimationFrame(bgRave)
-    window.requestAnimationFrame(rave)
+    if (stopRave == false) {
+        window.requestAnimationFrame(bgRave)
+        window.requestAnimationFrame(rave)
+        window.cancelAnimationFrame(bgReset);
+    } else if (stopRave == true) {
+        bgReset();
+        return;
+    }
+}
+
+function bgReset () {
+    scene.background = new THREE.Color('rgb(0, 0, 0)');
+    window.cancelAnimationFrame(rave);
+    window.requestAnimationFrame(bgReset)
+}
+
+
+
+function chooseSplash () {
+    let choices = [
+        'so cool',
+        'much wow',
+        'how exquisite',
+        'amazing',
+        'indubitably',
+        '"10/10" - IGN',
+        'wasting time since 1996',
+        'it spins',
+        'higher budget than cyberpunk',
+        'backed by obama'
+    ]
+    let length = choices.length
+
+    let choice1 = choices[Math.floor(Math.random() * length)]
+    let choice2 = choices[Math.floor(Math.random() * length)]
+
+    while (choice1 == choice2) {
+        choice2 = choices[Math.floor(Math.random() * length)]
+    }
+    document.getElementById('splash1').innerHTML = choice1
+    document.getElementById('splash2').innerHTML = choice2
 }
