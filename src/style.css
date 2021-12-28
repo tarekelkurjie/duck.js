@@ -4,7 +4,7 @@ body, html {
     margin: 0; 
     padding: 0;
     overflow: hidden;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: "Comic Sans MS", "Comic Sans", "Chalkboard", "ChalkboardSE-Regular", cursive;
     color: rgb(255, 0, 230);
     background-color: black;
     text-align: center;
@@ -12,7 +12,7 @@ body, html {
 }
 
 .duck {
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: "Comic Sans MS", "Comic Sans", "Chalkboard", "ChalkboardSE-Regular", cursive;
     color: rgb(255, 0, 230);
     width: 100%;
     font-size: 5em;
