@@ -319,7 +319,8 @@ function bgRave () {
         return;
     }
 }
- 
+
+
 function bgReset () {
     scene.background = new THREE.Color('rgb(0, 0, 0)');
     window.cancelAnimationFrame(rave);
