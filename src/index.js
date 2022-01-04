@@ -47,30 +47,44 @@ function addCommands() {
 
 function remCommands() {
     document.getElementById("cmd").style.display = "none";
+    document.getElementById("error").style.display = "none";
 }
 
 if (document.getElementById("cmd")) {
     const textField = document.getElementById("cmd")
     textField.addEventListener('keydown', (e) => {
-        if (e.key === "Enter") {   
+        if (e.key === "Enter") {
             let commandVal = textField.value;
+            let command = commandVal.split(' ')[0];
+            document.getElementById("error").style.display = "none";
 
-            if (commandVal == "/obama") {
-                loadObama();
-                remCommands();
-                if (didInit == false) {init(); didInit = true}
-            } else if (commandVal == "/toggleRave") {
+            if (command == "/toggleRave") {
                 stopRave = !stopRave;
                 bgRave();
                 remCommands();
                 if (didInit == false) {init(); didInit = true}
-            } else if (commandVal == "/removeObamas") {
+            } else if (command == "/removeObamas") {
                 removeObama();
                 remCommands();
                 if (didInit == false) {init(); didInit = true}
             } else {
-                alert("Invalid command!");
-                remCommands();
+                let parse = require('./interpreter')
+                let parsed;
+
+                try {
+                    parsed = parse(commandVal);
+                } catch (error) {
+                    document.getElementById("error").style.display = "block";
+                    document.getElementById('error').innerHTML = error;
+                    console.error(error);
+                }
+                console.log(parsed);
+
+                if (command == "/obama") {
+                    for (let x = 1; x <= parsed.default; x++) {
+                        loadObama();
+                    }
+                }
             }
         } else if (e.key === "Escape") {
             remCommands();
@@ -335,7 +349,7 @@ function chooseSplash () {
         'amazing',
         'indubitably',
         '"10/10" - IGN',
-        'wasting time since 1996',
+        'wasting time since 1931',
         'it spins',
         'higher budget than cyberpunk',
         'backed by obama'
