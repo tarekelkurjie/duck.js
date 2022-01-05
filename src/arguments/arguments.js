@@ -22,7 +22,7 @@ class Arguments {
         for (let i = 0; i < split.length; i++) {
             if (this.args.includes(split[i])) {
                 if ((this.args.includes(split[i + 1]) || !split[i + 1]) && split[i] != this.command) {
-                    throw new Error (`No value assigned to variable ${split[i]}. Use /help for set of uses and variables.`);
+                    throw new Error (`No value assigned to variable '${split[i]}'. Use /help for set of uses and variables.`);
                 } else {
                     results[split[i]] = int(split[i + 1]);
                     i++;
@@ -30,7 +30,15 @@ class Arguments {
             } else if (split[i] === this.command && (!this.args.includes(split[i + 1]) && split[i + 1])) {
                 results["default"] = int(split[i + 1])
             } else if (!this.args.includes(split[i - 1]) && split[i-1] != this.command){
-                throw new Error (`Variable ${split[i]} not found. Use /help for set of uses and variables.`);
+                throw new Error (`Variable '${split[i]}' not found. Use /help for set of uses and variables.`);
+            }
+        }
+
+        if (results['--minsize'] || results['--maxsize']) {
+            let sizeVar = results['--minsize'] ? '--minsize' : '--maxsize';
+            let oppVar = sizeVar == '--minsize' ? '--maxsize' : '--minsize';
+            if (!results['--maxsize'] || !results['--minsize']) {
+                throw new Error (`Variable '${sizeVar}' does not have matching '${oppVar}' variable.`)
             }
         }
         return results;

@@ -78,12 +78,26 @@ if (document.getElementById("cmd")) {
                     document.getElementById('error').innerHTML = error;
                     console.error(error);
                 }
-                console.log(parsed);
 
                 if (command == "/obama") {
-                    for (let x = 1; x <= parsed.default; x++) {
-                        loadObama();
+                    if (obamas.length <= 10000) {
+                        let size;
+                        if (parsed.default > 1000) {
+                            parsed.default = 1000;
+                        }
+
+                        for (let x = 1; x <= parsed.default; x++) {
+                            if (parsed['-S']) {size = parsed['-S']}
+                            else if (parsed['--minsize']) {size = Math.random(parsed['--minsize'], parsed['--maxsize'])}
+                            loadObama(size != undefined ? size : 1);
+                        }
+                    } else {
+                        alert("exceeded maximum obamas!")
                     }
+                }
+
+                if (document.getElementById("error").style.display == "none") {
+                    remCommands();
                 }
             }
         } else if (e.key === "Escape") {
@@ -249,10 +263,12 @@ function rave () {
     window.requestAnimationFrame(rave)
 }
 
-function loadObama () {
+function loadObama (size=1) {
     loader.load('public/obama_prism.glb', function (gltf) {
 
+        gltf.scene.scale.set(size, size, size)
         scene.add(gltf.scene);
+        
 
         obamas.push({
             obj: gltf.scene,
