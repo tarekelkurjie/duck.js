@@ -1,3 +1,24 @@
+/*
+* Copyright © 2022 Joey Malvinni
+* 
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+* 
+* http://www.apache.org/licenses/LICENSE-2.0
+* 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+* Modifications copyright © 2022 Tarek Elkurjie
+*/
+
+
+
+
 let int = require('./parseint');
 
 class Arguments {
@@ -18,7 +39,7 @@ class Arguments {
     getValues (text) {
         let results = {};
         let split = text.split(' ');
-        console.log(split);
+        
         for (let i = 0; i < split.length; i++) {
             if (this.args.includes(split[i])) {
                 if ((this.args.includes(split[i + 1]) || !split[i + 1]) && split[i] != this.command) {
