@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 });
 
 port = process.env.PORT || 3000
-app.listen(port, () => console.log(`Listening on ip ${getIPAddress()}, port ${port}`));
+app.listen(port, () => console.log(`Listening on ip ${getIPAddress()}:${port}`));
 
 function getIPAddress() {
     if (port === 3000) {

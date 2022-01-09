@@ -47,30 +47,58 @@ function addCommands() {
 
 function remCommands() {
     document.getElementById("cmd").style.display = "none";
+    document.getElementById("error").style.display = "none";
 }
 
 if (document.getElementById("cmd")) {
     const textField = document.getElementById("cmd")
     textField.addEventListener('keydown', (e) => {
-        if (e.key === "Enter") {   
+        if (e.key === "Enter") {
             let commandVal = textField.value;
+            let command = commandVal.split(' ')[0];
+            document.getElementById("error").style.display = "none";
 
-            if (commandVal == "/obama") {
-                loadObama();
-                remCommands();
-                if (didInit == false) {init(); didInit = true}
-            } else if (commandVal == "/toggleRave") {
+            if (command == "/toggleRave") {
                 stopRave = !stopRave;
                 bgRave();
                 remCommands();
                 if (didInit == false) {init(); didInit = true}
-            } else if (commandVal == "/removeObamas") {
+            } else if (command == "/removeObamas") {
                 removeObama();
                 remCommands();
                 if (didInit == false) {init(); didInit = true}
             } else {
-                alert("Invalid command!");
-                remCommands();
+                let parse = require('./interpreter')
+                let parsed;
+
+                try {
+                    parsed = parse(commandVal);
+                } catch (error) {
+                    document.getElementById("error").style.display = "block";
+                    document.getElementById('error').innerHTML = error;
+                    console.error(error);
+                }
+
+                if (command == "/obama") {
+                    if (obamas.length <= 10000) {
+                        let size;
+                        if (parsed.default > 1000) {
+                            parsed.default = 1000;
+                        }
+
+                        for (let x = 1; x <= parsed.default; x++) {
+                            if (parsed['-S']) {size = parsed['-S']}
+                            else if (parsed['--minsize']) {size = Math.random(parsed['--minsize'], parsed['--maxsize'])}
+                            loadObama(size != undefined ? size : 1);
+                        }
+                    } else {
+                        alert("exceeded maximum obamas!")
+                    }
+                }
+
+                if (document.getElementById("error").style.display == "none") {
+                    remCommands();
+                }
             }
         } else if (e.key === "Escape") {
             remCommands();
@@ -235,10 +263,12 @@ function rave () {
     window.requestAnimationFrame(rave)
 }
 
-function loadObama () {
+function loadObama (size=1) {
     loader.load('public/obama_prism.glb', function (gltf) {
 
+        gltf.scene.scale.set(size, size, size)
         scene.add(gltf.scene);
+        
 
         obamas.push({
             obj: gltf.scene,
@@ -335,7 +365,7 @@ function chooseSplash () {
         'amazing',
         'indubitably',
         '"10/10" - IGN',
-        'wasting time since 1996',
+        'wasting time since 1931',
         'it spins',
         'higher budget than cyberpunk',
         'backed by obama'

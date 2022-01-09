@@ -154,6 +154,17 @@ body, html {
     font-style: bold;
 }
 
+.error {
+    width: 100vw;
+    border: transparent;
+    opacity: 100%;
+    background: gray;
+    display: none;
+    font-family: 'Source Code Pro';
+    font-style: bold;
+    color: red;
+}
+
 input:focus, commands {
     outline: none !important;
 }
