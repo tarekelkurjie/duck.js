@@ -21,6 +21,7 @@ let camera,
     stopRave = true;
 
 var r = 5;
+
 var theta = 0;
 var dTheta = 2 * Math.PI / 1000;
 
@@ -174,7 +175,7 @@ function init () {
     document.getElementById('volume').style.display = 'block'
     document.body.style.cursor = 'auto';
 
-    audio = new Audio('public/running_in_the_90s.mp3');
+    audio = new Audio('public/StayInsideMe.mp3');
     audio.play();
 
     const container = document.createElement('div');
@@ -301,9 +302,9 @@ function obamaSpin () {
         for (let i = 0; i < obamas.length; i++) {
             obamas[i].obj.rotation.x += obamas[i].seed / 10;
             obamas[i].obj.rotation.z += obamas[i].seed / 10;
-            obamas[i].obj.position.x = r * Math.cos(theta * i * obamas[i].direction);
-            obamas[i].obj.position.z = r * Math.sin(theta * obamas[i].seed * i * obamas[i].direction);
-            obamas[i].obj.position.y = r * Math.sin(theta * obamas[i].seed * obamas[i].direction);
+            obamas[i].obj.position.x = r * Math.cos(theta * i * obamas[i].direction) ;
+            obamas[i].obj.position.z = r * Math.sin(theta * (obamas[i].seed / 50) * i * obamas[i].direction);
+            obamas[i].obj.position.y = r * Math.sin(theta * (obamas[i].seed / 50) * obamas[i].direction);
         }
     }
 
@@ -368,7 +369,18 @@ function chooseSplash () {
         'wasting time since 1931',
         'it spins',
         'higher budget than cyberpunk',
-        'backed by obama'
+        'backed by obama',
+        'the best website ever',
+        'just wait and see!',
+        '0$ in production cost',
+        'these messages are cool',
+        'i like ducks',
+        'do you like ducks?',
+        'all my homies like ducks',
+        'leave if you dont like ducks',
+        'duck supreme',
+        'obama. need i say more',
+        'quack quack mf'
     ]
     let length = choices.length
 
