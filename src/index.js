@@ -21,6 +21,7 @@ let camera,
     stopRave = true;
 
 var r = 5;
+
 var theta = 0;
 var dTheta = 2 * Math.PI / 1000;
 
@@ -47,30 +48,58 @@ function addCommands() {
 
 function remCommands() {
     document.getElementById("cmd").style.display = "none";
+    document.getElementById("error").style.display = "none";
 }
 
 if (document.getElementById("cmd")) {
     const textField = document.getElementById("cmd")
     textField.addEventListener('keydown', (e) => {
-        if (e.key === "Enter") {   
+        if (e.key === "Enter") {
             let commandVal = textField.value;
+            let command = commandVal.split(' ')[0];
+            document.getElementById("error").style.display = "none";
 
-            if (commandVal == "/obama") {
-                loadObama();
-                remCommands();
-                if (didInit == false) {init(); didInit = true}
-            } else if (commandVal == "/toggleRave") {
+            if (command == "/toggleRave") {
                 stopRave = !stopRave;
                 bgRave();
                 remCommands();
                 if (didInit == false) {init(); didInit = true}
-            } else if (commandVal == "/removeObamas") {
+            } else if (command == "/removeObamas") {
                 removeObama();
                 remCommands();
                 if (didInit == false) {init(); didInit = true}
             } else {
-                alert("Invalid command!");
-                remCommands();
+                let parse = require('./interpreter')
+                let parsed;
+
+                try {
+                    parsed = parse(commandVal);
+                } catch (error) {
+                    document.getElementById("error").style.display = "block";
+                    document.getElementById('error').innerHTML = error;
+                    console.error(error);
+                }
+
+                if (command == "/obama") {
+                    if (obamas.length <= 10000) {
+                        let size;
+                        if (parsed.default > 1000) {
+                            parsed.default = 1000;
+                        }
+
+                        for (let x = 1; x <= parsed.default; x++) {
+                            if (parsed['-S']) {size = parsed['-S']}
+                            else if (parsed['--minsize']) {size = Math.random(parsed['--minsize'], parsed['--maxsize'])}
+                            loadObama(size != undefined ? size : 1);
+                        }
+                    } else {
+                        alert("exceeded maximum obamas!")
+                    }
+                }
+
+                if (document.getElementById("error").style.display == "none") {
+                    remCommands();
+                }
             }
         } else if (e.key === "Escape") {
             remCommands();
@@ -146,7 +175,7 @@ function init () {
     document.getElementById('volume').style.display = 'block'
     document.body.style.cursor = 'auto';
 
-    audio = new Audio('public/running_in_the_90s.mp3');
+    audio = new Audio('public/StayInsideMe.mp3');
     audio.play();
 
     const container = document.createElement('div');
@@ -235,10 +264,12 @@ function rave () {
     window.requestAnimationFrame(rave)
 }
 
-function loadObama () {
+function loadObama (size=1) {
     loader.load('public/obama_prism.glb', function (gltf) {
 
+        gltf.scene.scale.set(size, size, size)
         scene.add(gltf.scene);
+        
 
         obamas.push({
             obj: gltf.scene,
@@ -271,9 +302,9 @@ function obamaSpin () {
         for (let i = 0; i < obamas.length; i++) {
             obamas[i].obj.rotation.x += obamas[i].seed / 10;
             obamas[i].obj.rotation.z += obamas[i].seed / 10;
-            obamas[i].obj.position.x = r * Math.cos(theta * i * obamas[i].direction);
-            obamas[i].obj.position.z = r * Math.sin(theta * obamas[i].seed * i * obamas[i].direction);
-            obamas[i].obj.position.y = r * Math.sin(theta * obamas[i].seed * obamas[i].direction);
+            obamas[i].obj.position.x = r * Math.cos(theta * i * obamas[i].direction) ;
+            obamas[i].obj.position.z = r * Math.sin(theta * (obamas[i].seed / 50) * i * obamas[i].direction);
+            obamas[i].obj.position.y = r * Math.sin(theta * (obamas[i].seed / 50) * obamas[i].direction);
         }
     }
 
@@ -335,10 +366,21 @@ function chooseSplash () {
         'amazing',
         'indubitably',
         '"10/10" - IGN',
-        'wasting time since 1996',
+        'wasting time since 1931',
         'it spins',
         'higher budget than cyberpunk',
-        'backed by obama'
+        'backed by obama',
+        'the best website ever',
+        'just wait and see!',
+        '0$ in production cost',
+        'these messages are cool',
+        'i like ducks',
+        'do you like ducks?',
+        'all my homies like ducks',
+        'leave if you dont like ducks',
+        'duck supreme',
+        'obama. need i say more',
+        'quack quack mf'
     ]
     let length = choices.length
 

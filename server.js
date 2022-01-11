@@ -8,4 +8,24 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
 });
 
-app.listen(process.env.PORT || 3000, () => console.log('Listening on port 3000'));
+port = process.env.PORT || 3000
+app.listen(port, () => console.log(`Listening on ip ${getIPAddress()}:${port}`));
+
+function getIPAddress() {
+    if (port === 3000) {
+        var interfaces = require('os').networkInterfaces();
+        for (var devName in interfaces) {
+        var iface = interfaces[devName];
+    
+        for (var i = 0; i < iface.length; i++) {
+            var alias = iface[i];
+            if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal)
+            return alias.address;
+        }
+        }
+    }
+    else {
+        return "Not supported"
+    }
+    return '0.0.0.0';
+  }
